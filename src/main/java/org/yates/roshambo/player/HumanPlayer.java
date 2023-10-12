@@ -44,6 +44,7 @@ public class HumanPlayer extends Player {
     }
 
     public Move getMove() {
+        System.out.println(this.name + " it's your turn!");
         InputHandler handler = InputHandler.builder()
                 .prompt("Rock, Paper, or Scissors? (R/P/S): ")
                 .validator(in -> in.equals("r") || in.equals("p") || in.equals("s"))

@@ -2,7 +2,7 @@ package org.yates.roshambo;
 
 import java.util.UUID;
 public abstract class Player {
-    private final String name;
+    protected final String name;
     protected UUID uuid;
 
     public Player(String name) {
