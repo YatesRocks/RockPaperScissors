@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -61,7 +62,8 @@ public class InputHandler {
                 throw new InputMismatchException(in);
             } catch (IOException e) {
                 log.log(Level.SEVERE, "Unrecoverable error occurred.", e.getMessage());
-                break;
+                System.out.println(e.getLocalizedMessage());
+                System.out.println(Arrays.toString(e.getStackTrace()));
             } catch (InputMismatchException e) {
                 String response = e.getMessage();
                 System.out.printf("'%s' is not a valid response.%n", response);
@@ -71,7 +73,6 @@ public class InputHandler {
                 System.out.println("Let's try again...");
             }
         }
-        return null;
     }
 
     public static class Builder {

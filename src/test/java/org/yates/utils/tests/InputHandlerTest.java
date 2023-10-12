@@ -1,5 +1,6 @@
 package org.yates.utils.tests;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.yates.utils.InputHandler;
 
@@ -11,6 +12,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class InputHandlerTest {
+
+    @AfterEach
+    void reset() throws IOException {
+        System.setIn(System.in);
+    }
+
     @Test
     void query() throws IOException {
         // Creating mock input stream
