@@ -1,0 +1,119 @@
+package org.yates.utils;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.InputMismatchException;
+import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
+// TODO: gather the courage to document this mess
+public class InputHandler {
+    private final Predicate<String> validator;
+    private final String errorMessage;
+    private final BufferedReader reader;
+    private final Logger log;
+    private String prompt;
+
+    private InputHandler(Predicate<String> validator, String prompt, String errorMessage, BufferedReader reader, String loggerName) {
+        this.validator = validator;
+        this.prompt = prompt;
+        this.errorMessage = errorMessage;
+        this.reader = reader;
+        this.log = Logger.getLogger(loggerName);
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public boolean isValid(@NotNull String input) {
+        return validator.test(input.toLowerCase());
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public String getPrompt() {
+        return prompt;
+    }
+
+    public void setPrompt(String prompt) {
+        this.prompt = prompt;
+    }
+
+    public String query() {
+        while (true) {
+            System.out.print(prompt);
+            try (reader) {
+                String in = reader.readLine();
+                if (in == null)
+                    throw new NullPointerException("No input detected.");
+                in = in.toLowerCase();
+                if (isValid(in))
+                    return in;
+                throw new InputMismatchException(in);
+            } catch (IOException e) {
+                log.log(Level.SEVERE, "Unrecoverable error occurred.", e.getMessage());
+                break;
+            } catch (InputMismatchException e) {
+                String response = e.getMessage();
+                System.out.printf("'%s' is not a valid response.%n", response);
+                System.out.println(errorMessage);
+            } catch (NullPointerException e) {
+                log.warning(e.getMessage());
+                System.out.println("Let's try again...");
+            }
+        }
+        return null;
+    }
+
+    public static class Builder {
+        private Predicate<String> validator;
+        private String prompt = "-> ";
+        private String errorMessage = "Invalid input.";
+        private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        private String loggerName = "YatesLogger";
+
+        public Builder validator(Predicate<String> validator) {
+            this.validator = validator;
+            return this;
+        }
+
+        public Builder setReader(BufferedReader reader) {
+            this.reader = reader;
+            return this;
+        }
+
+        public Builder prompt(String prompt) {
+            this.prompt = prompt;
+            return this;
+        }
+
+        public Builder errorMessage(String errorMessage) {
+            this.errorMessage = errorMessage;
+            return this;
+        }
+
+        public Builder setIn(InputStream stream) {
+            this.reader = new BufferedReader(new InputStreamReader(stream));
+            return this;
+        }
+
+        public Builder loggerName(String loggerName) {
+            this.loggerName = loggerName;
+            return this;
+        }
+
+        public InputHandler build() {
+            return new InputHandler(validator, prompt, errorMessage, reader, loggerName);
+        }
+
+    }
+}
