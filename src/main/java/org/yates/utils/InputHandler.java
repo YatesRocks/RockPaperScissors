@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.InputMismatchException;
@@ -37,14 +36,6 @@ public class InputHandler {
         return validator.test(input.toLowerCase());
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public String getPrompt() {
-        return prompt;
-    }
-
     public void setPrompt(String prompt) {
         this.prompt = prompt;
     }
@@ -52,7 +43,7 @@ public class InputHandler {
     public String query() {
         while (true) {
             System.out.print(prompt);
-            try (reader) {
+            try {
                 String in = reader.readLine();
                 if (in == null)
                     throw new NullPointerException("No input detected.");
@@ -99,11 +90,6 @@ public class InputHandler {
 
         public Builder errorMessage(String errorMessage) {
             this.errorMessage = errorMessage;
-            return this;
-        }
-
-        public Builder setIn(InputStream stream) {
-            this.reader = new BufferedReader(new InputStreamReader(stream));
             return this;
         }
 
