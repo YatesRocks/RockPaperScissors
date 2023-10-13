@@ -1,5 +1,6 @@
 package org.yates.utils;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
@@ -28,7 +29,8 @@ public class InputHandler {
         this.log = Logger.getLogger(loggerName);
     }
 
-    public static Builder builder() {
+    @Contract(" -> new")
+    public static @NotNull Builder builder() {
         return new Builder();
     }
 
