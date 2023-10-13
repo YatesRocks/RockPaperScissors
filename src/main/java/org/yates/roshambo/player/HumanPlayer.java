@@ -20,7 +20,6 @@ public class HumanPlayer extends Player {
     public static HumanPlayer getHumanPlayer() {
         InputHandler handler = InputHandler.builder()
                 .prompt("Please enter a name: ")
-                .validator(in -> true)
                 .build();
         String name = handler.query();
         System.out.println("Nice to meet you, " + name);
@@ -36,7 +35,6 @@ public class HumanPlayer extends Player {
         InputHandler handler = InputHandler.builder()
                 .prompt("Please enter a name: ")
                 .setReader(reader)
-                .validator(in -> true)
                 .build();
         String name = handler.query();
         System.out.println("Nice to meet you, " + name);
