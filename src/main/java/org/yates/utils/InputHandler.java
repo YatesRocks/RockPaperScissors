@@ -69,7 +69,7 @@ public class InputHandler {
     }
 
     public static class Builder {
-        private Predicate<String> validator;
+        private Predicate<String> validator = in -> true;
         private String prompt = "-> ";
         private String errorMessage = "Invalid input.";
         private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
