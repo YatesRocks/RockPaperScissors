@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 class InputHandlerTest {
 
     @AfterEach
-    void reset() throws IOException {
+    void reset() {
         System.setIn(System.in);
     }
 
