@@ -6,21 +6,21 @@ public enum Move {
     private Outcome rock(Outcome x) {
         if (x == Outcome.WIN)
             System.out.println("Rock smashes Scissors!");
-        System.out.println("Paper covers Rock!");
+        else System.out.println("Paper covers Rock!");
         return x;
     }
 
     private Outcome paper(Outcome x) {
         if (x == Outcome.WIN)
             System.out.println("Paper covers Rock!");
-        System.out.println("Scissors cut Paper!");
+        else System.out.println("Scissors cut Paper!");
         return x;
     }
 
     private Outcome scissors(Outcome x) {
         if (x == Outcome.WIN)
             System.out.println("Scissors cut Paper!");
-        System.out.println("Rock smashes Scissors!");
+        else System.out.println("Rock smashes Scissors!");
         return x;
     }
 
