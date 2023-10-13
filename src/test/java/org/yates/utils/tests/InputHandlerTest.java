@@ -49,7 +49,7 @@ class InputHandlerTest {
 
 
         InputHandler inputHandler = InputHandler.builder()
-                .validator(in -> in.equals("washington dc") || in.equals("n"))
+                .validator(in -> in.equals("washington dc"))
                 .prompt("What's the capitol of the USA? ")
                 .errorMessage("Incorrect!")
                 .setReader(mockReader)
