@@ -55,8 +55,7 @@ public class InputHandler {
                 throw new InputMismatchException(in);
             } catch (IOException e) {
                 log.log(Level.SEVERE, "Unrecoverable error occurred.", e.getMessage());
-                System.out.println(e.getLocalizedMessage());
-                System.out.println(Arrays.toString(e.getStackTrace()));
+                throw new RuntimeException(e);
             } catch (InputMismatchException e) {
                 String response = e.getMessage();
                 System.out.printf("'%s' is not a valid response.%n", response);
